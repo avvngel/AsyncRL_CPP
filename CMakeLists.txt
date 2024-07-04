@@ -18,7 +18,7 @@ find_package(Torch REQUIRED)
 file(GLOB SOURCES "src/*.cpp")
 
 # Global Compiler flags
-add_compile_options(-g -Wall -Wextra -pedantic)
+add_compile_options(-g -Wall -Wextra -Werror -pedantic)
 
 # Define libraries
 
