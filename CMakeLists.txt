@@ -18,7 +18,10 @@ find_package(Torch REQUIRED)
 file(GLOB SOURCES "src/*.cpp")
 
 # Global Compiler flags
-add_compile_options(-g -Wall -Wextra -Werror -pedantic)
+add_compile_options(-g -Wall -Wextra -Werror -pedantic -std=c++20)
+
+# Enable CTest
+enable_testing()
 
 # Define libraries
-
+add_subdirectory(tests)
