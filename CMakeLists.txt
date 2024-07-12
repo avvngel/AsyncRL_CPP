@@ -14,8 +14,8 @@ list(APPEND CMAKE_PREFIX_PATH "/opt/libtorch")
 # Find Dependencies
 find_package(Torch REQUIRED)
 
-# Define source files
-file(GLOB SOURCES "src/*.cpp")
+# Set Library Name
+set(LIBRARY_NAME "AsyncRL")
 
 # Global Compiler flags
 add_compile_options(-g -Wall -Wextra -Werror -pedantic -std=c++20)
@@ -24,4 +24,5 @@ add_compile_options(-g -Wall -Wextra -Werror -pedantic -std=c++20)
 enable_testing()
 
 # Define libraries
+add_subdirectory(src)
 add_subdirectory(tests)

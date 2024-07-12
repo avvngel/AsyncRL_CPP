@@ -1,5 +1,6 @@
-#ifndef RANDOM_ENGINE_H
-#define RANDOM_ENGINE_H
+#pragma once
+
+#include<random>
 
 class RandomEngine { 
 public:
@@ -11,30 +12,14 @@ public:
     RandomEngine& operator=( const RandomEngine& ) = delete;
 
     // Setters
-    void set_seed( unsigned int s ) { 
-        seed = s;
-        seed_set = true
-}
+    static void set_seed( unsigned int s ); 
 
     // Getters
-    std::mt19937 get_rng() {
-        if ( seed_set ) 
-        {
-            static unsigned int next_seed = seed;
-            next_seed = ( next_seed + 1 )*2
-            return std::mt19937{ next_seed };
-        }
-        else 
-        { 
-            std::random_device rd;
-            return std:mt19937{ rd() }
-        }
-    }
+    static std::mt19937 get_rng();
 
 private:
     // Private Attributes
-    unsigned int seed;
-    bool seed_set = false;
+    static unsigned int seed;
+    static bool seed_set;
 };
 
-#endif // RANDOM_ENGINE_H
