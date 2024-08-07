@@ -1,18 +1,18 @@
 #pragma once
 
-#include<random>
+#include <random>
 
-class RandomEngine { 
+class RandomEngine {
 public:
     // Constructor
-    RandomEngine( ) = default;    
+    RandomEngine( ) = default;
 
     // Delete copy constructor and assignent operator
-    RandomEngine( const &RandomEngine ) = delete;
+    RandomEngine( const RandomEngine& ) = delete;
     RandomEngine& operator=( const RandomEngine& ) = delete;
 
     // Setters
-    static void set_seed( unsigned int s ); 
+    static void set_seed( unsigned int s );
 
     // Getters
     static std::mt19937 get_rng();

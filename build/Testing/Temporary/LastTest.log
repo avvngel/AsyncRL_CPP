@@ -1,0 +1,35 @@
+Start testing: Aug 07 11:55 CDT
+----------------------------------------------------------
+1/2 Testing: TestRandomEngine
+1/2 Test: TestRandomEngine
+Command: "/home/angelleal/Documents/Projects/AsyncRL_CPP/build/tests/test_random_engine"
+Directory: /home/angelleal/Documents/Projects/AsyncRL_CPP/build/tests
+"TestRandomEngine" start time: Aug 07 11:55 CDT
+Output:
+----------------------------------------------------------
+Test Passed: Seeded RNG sequences match.Test Passed: Unseeded RNG generates random numbers.
+<end of output>
+Test time =   0.39 sec
+----------------------------------------------------------
+Test Passed.
+"TestRandomEngine" end time: Aug 07 11:55 CDT
+"TestRandomEngine" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: TestFunctionApproximator
+2/2 Test: TestFunctionApproximator
+Command: "/home/angelleal/Documents/Projects/AsyncRL_CPP/build/tests/test_funct_approx"
+Directory: /home/angelleal/Documents/Projects/AsyncRL_CPP/build/tests
+"TestFunctionApproximator" start time: Aug 07 11:55 CDT
+Output:
+----------------------------------------------------------
+0
+<end of output>
+Test time =   0.31 sec
+----------------------------------------------------------
+Test Passed.
+"TestFunctionApproximator" end time: Aug 07 11:55 CDT
+"TestFunctionApproximator" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 07 11:55 CDT
