@@ -1,7 +1,5 @@
 #pragma once
 
-#include <type_traits>
-
 template <typename Derived, 
           typename PredictionType,
           typename StateType>
@@ -13,7 +11,7 @@ public:
         return static_cast<Derived*>( this )->predict( state );
     }
 
-    auto& get_parameter_reference() { 
+    auto& get_param_reference() { 
         return static_cast<Derived*>( this )->get_parameter_reference();
     }
 };

@@ -17,12 +17,12 @@ public:
     DiscActionDist predict( State& state )
     { 
         ( void )state;
-        DiscActionDist res( 100, 0 );
+        DiscActionDist res( 1000, 0 );
         res[ expected_action ] = 1;
         return res;
     }
     
-    Parameters& get_param_references()
+    Parameters& get_param_reference()
     { 
         return params;
     }

@@ -5,10 +5,12 @@
 template <typename FunctionApproximator,
           typename StateType,
           typename ActionType>
-class DiscreteActor : public Actor<DiscreteActor, 
-                             FunctionApproximator,
-                             StateType,
-                             ActionType>
+class DiscreteActor : public Actor< DiscreteActor< FunctionApproximator
+                                                 , StateType
+                                                 , ActionType >
+                                  , FunctionApproximator
+                                  , StateType
+                                  , ActionType >
 {
 public:
     // Public Constructor
@@ -19,7 +21,7 @@ public:
     ActionType select_action( const StateType& state ) const
     { 
         // Get discrete probability distribution from approximator
-        std::vector<float> probabilities{ action_dist_approx_.predict( state ) };
+        std::vector<float> probabilities{ this->action_dist_approx_.predict( state ) };
 
         // Get discrete distribution based on probabilities
         std::discrete_distribution<> action_dist( probabilities.begin() 
