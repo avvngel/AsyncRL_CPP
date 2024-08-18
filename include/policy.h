@@ -1,7 +1,5 @@
 #pragma once
 
-#include "lib_type_aliases.h"
-
 template < typename Derived
          , typename FunctionApproximator
          , typename StateType
@@ -21,10 +19,14 @@ public:
         return static_cast<Derived*>( this )->sample( state, rng );
     }
     
+    // Getters    
     auto get_param_reference()
     { 
         return dist_approx_.get_param_reference();
     }
+    
+    // Get Distribution Approximator
+    auto return dist_approx_;
 
 protected:
     
