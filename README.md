@@ -1,2 +1,3 @@
 # AsyncRL_CPP
 C++ library for designing and implementing asynchronous reinforcement learning frameworks.
+This project is still in it's early phases. More to come soon...
