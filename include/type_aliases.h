@@ -1,5 +1,5 @@
-using State = const int;
-using States = std::vector<State>;
+using DiscState = int;
+using DiscStates = std::vector<DiscState>;
 using DiscAction = int;
 using DiscActions = std::vector<DiscAction>;
 using DiscActionDist = std::vector<float>;

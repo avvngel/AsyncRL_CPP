@@ -2,13 +2,14 @@
 
 #include <random>
 #include <utility>
+#include <cassert>
 #include "concepts.h"
 
 template < typename PolicyType
          , typename StateType
          , typename ActionType >
 
-requires DiscreteAction ActionType || ContinuousAction ActionType
+requires DiscreteAction<ActionType> || ContinuousAction<ActionType>
 class Actor
 {
 public:
@@ -30,26 +31,27 @@ public:
     , rng_( std::move( rng ) )
     , rand_dist( 0.0, 1.0 ) 
     {
-        assert( exploration_window[ 0 ] < exploration_window[ 1 ]
+        assert( exploration_window.first < exploration_window.second
               && "Min value must be less than max value" );
     };
  
     // Public APIs
     
-    ActionType select_action( const StateType& state ) const
+    ActionType select_action( const StateType& state )
     {
-        return policy_.sample( state );
+        return policy_.sample( state, rng_ );
     }
     
-    ActionType select_random( const StateType& state ) const
+    ActionType select_random( const StateType& state )
     {
+
         if constexpr ( DiscreteAction<ActionType> )
             return select_random_discrete( state );
         else
-            return select_random_continuous( state );
+            return select_random_continuous();
     }
 
-    ActionType explore( const StateType& state, float epsilon) const
+    ActionType explore( const StateType& state, float epsilon)
     { 
         if ( random() < epsilon )
             return select_random( state );
@@ -77,21 +79,20 @@ protected:
 
     // Private APIs
     float random() { return rand_dist( rng_ ); }
-};
 
 private:
 
-    ActionType select_random_discrete()
+    ActionType select_random_discrete( const StateType& state)
     { 
-        static std::uniform_int_distribution<> rand_action_dist( 0, policy_.n_actions );
+        static std::uniform_int_distribution<> rand_action_dist( 0, policy_.get_n_actions( state ) );
         return rand_action_dist( rng_ );
     }
 
-    ActionType select_random_continuous( const StateType& ) const
+    ActionType select_random_continuous()
     { 
-        static std::uniform_real_distribution<> rand_action_dist( exploration_window_[ 0 ]
-                                                                , exploration_window_[ 1 ] );
+        static std::uniform_real_distribution<> rand_action_dist( exploration_window_.first
+                                                                , exploration_window_.second );
         return rand_action_dist( rng_ );
     }
 
-
+};

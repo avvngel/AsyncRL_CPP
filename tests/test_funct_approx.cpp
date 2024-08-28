@@ -3,13 +3,13 @@
 #include "funct_approx.h"
 #include "type_aliases.h"
 
-class TestFunctApprox : public FunctionApproximator<TestFunctApprox, DiscActionDist, State> 
+class TestFunctApprox : public FunctionApproximator<TestFunctApprox, DiscActionDist, DiscState> 
 { 
 public:
 
     TestFunctApprox() : params( 20, 1 ) {};
 
-    DiscActionDist predict( State state ) const 
+    DiscActionDist predict( const DiscState state ) const 
     {
         std::cout << state; 
         DiscActionDist res( 100, 0 );
@@ -29,7 +29,7 @@ private:
 
 static_assert(std::is_base_of<FunctionApproximator<TestFunctApprox, 
                                                    DiscActionDist, 
-                                                   State>, 
+                                                   DiscState>, 
                                                    TestFunctApprox>::value,
               "TestFunctApprox should derive from FunctionApproximator");
 

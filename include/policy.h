@@ -14,7 +14,7 @@ public:
     
     // Public APIs
     
-    ActionType sample( const StateType& state, std::mt19937 rng ) const
+    ActionType sample( const StateType& state, std::mt19937& rng ) const
     { 
         return static_cast<Derived*>( this )->sample( state, rng );
     }
@@ -24,10 +24,13 @@ public:
     { 
         return dist_approx_.get_param_reference();
     }
-    
-    // Get Distribution Approximator
-    auto return dist_approx_;
-
+   
+    auto get_n_actions( const StateType& state )
+    { 
+        static std::size_t n_actions{ dist_approx_.predict( state ).size() };
+        return n_actions;
+    }
+ 
 protected:
     
     FunctionApproximator& dist_approx_;
