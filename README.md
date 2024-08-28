@@ -5,17 +5,18 @@ C++ library for designing and implementing asynchronous reinforcement learning f
 **Current Phase:** Early Development
 
 - **Implemented:**
-  - basic project structure
-  - intitial testing framework
-  - select core components:
-    - classes: Actor, RandomEngine
-    - template classes: FunctionApproximator, Policy
+  - Basic project structure
+  - Intitial testing framework
+  - Select core components:
+    - Classes: Actor, RandomEngine
+    - Template classes: FunctionApproximator, Policy
 - **In progress:**
-  - further core components
-  - classes: ActorFactory, Learner, GradientCalculator, RolloutManager, ReplayBuffer
+  - Further core components
+    - Classes: ActorFactory, Learner, GradientCalculator, RolloutManager, ReplayBuffer
 - **Planned:**
+  - Support for multi-dimensional action spaces (currently limited to 1D)
   - Complete out-of-the-box RL algorithms (A3C, Parallel DQN, etc.)
-  - documentation and examples for creating custom algorithms
-  - Report generator and logger
+  - Documentation and examples for creating custom algorithms
+  - Report generation and logging system
   - Error tracer and execution monitor
-  - installation and basic usage guides.
+  - Installation and basic usage guides
