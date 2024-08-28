@@ -1,6 +1,6 @@
 #include <random>
 #include "policy.h"
-#include "TestApproximators.h"
+#include "test_approximators.h"
 #include "type_aliases.h"
 
 /** 

@@ -2,8 +2,8 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
-#include "TestApproximators.h"
-#include "TestPolicies.h"
+#include "test_approximators.h"
+#include "test_policies.h"
 #include "actor.h"
 #include "type_aliases.h"
 #include "random_engine.h"
@@ -76,7 +76,7 @@ int test_select_random()
     return 1;
 }
 
-int test_exploration()
+int test_discrete_exploration()
 {
     SimpleApprox test_fn;
     SimplePolicy test_policy( test_fn );
@@ -123,7 +123,7 @@ int main()
     if ( test_select_random() != 0 )
         return 1;
 
-    if ( test_exploration() != 0 )
+    if ( test_discrete_exploration() != 0 )
         return 1;
 
     return 0;
