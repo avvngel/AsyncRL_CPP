@@ -1,9 +1,14 @@
 #pragma once
 
+#include "concepts.h"
+
 template <typename Derived, 
           typename PredictionType,
           typename StateType>
-class FunctionApproximator { 
+requires HasSize<PredictionType>
+class FunctionApproximator 
+{ 
+
 public:
 
     // Public API

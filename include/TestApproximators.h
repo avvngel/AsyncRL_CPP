@@ -7,14 +7,14 @@
 
 class SimpleApprox : public FunctionApproximator< SimpleApprox
                                                 , DiscActionDist
-                                                , State > 
+                                                , DiscState > 
 { 
 public:
     //Public Constructor
     SimpleApprox() : params( 20, 1 ) {}
 
     // Public APIs
-    DiscActionDist predict( State& state )
+    DiscActionDist predict( const DiscState& state ) const
     { 
         ( void )state;
         DiscActionDist res( 1000, 0 );
