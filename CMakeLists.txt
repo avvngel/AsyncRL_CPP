@@ -13,6 +13,21 @@ list(APPEND CMAKE_PREFIX_PATH "/opt/libtorch")
 
 # Find Dependencies
 find_package(Torch REQUIRED)
+find_package(Doxygen QUIET)
+
+# Option to build documentation (Developers only), default is OFF
+option(BUILD_DOC "Build documentation" OFF)
+
+if (DOXYGEN_FOUND AND BUILD_DOC)
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs)
+
+    add_custom_target(doc_doxygen ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_IN}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM)
+endif()
 
 # Set Library Name
 set(LIBRARY_NAME "AsyncRL")
