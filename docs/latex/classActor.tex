@@ -1,0 +1,224 @@
+\hypertarget{classActor}{}\doxysection{Actor$<$ Policy\+Type, State\+Type, Action\+Type $>$ Class Template Reference}
+\label{classActor}\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+
+
+The \mbox{\hyperlink{classActor}{Actor}} class represents an agent that selects actions in a given environment.  
+
+
+
+
+{\ttfamily \#include $<$actor.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classActor_a6b6314476803cfb36626e106274e7f73}{Actor}} (Policy\+Type policy, std\+::mt19937 rng)
+\begin{DoxyCompactList}\small\item\em Constructor for discrete action spaces. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classActor_aa68a1ed3c974d45a9248f049047a2c37}{Actor}} (Policy\+Type policy, std\+::mt19937 rng, std\+::pair$<$ float, float $>$ exploration\+\_\+window)
+\begin{DoxyCompactList}\small\item\em Constructor for continuous action spaces. \end{DoxyCompactList}\item 
+Action\+Type \mbox{\hyperlink{classActor_a6820d705a176f354d70c3beae95ae45a}{select\+\_\+action}} (const State\+Type \&state)
+\begin{DoxyCompactList}\small\item\em Selects an action based on the current policy. \end{DoxyCompactList}\item 
+Action\+Type \mbox{\hyperlink{classActor_ad13d4b508a0deaeca8a180acbdc35cf2}{select\+\_\+random}} (const State\+Type \&state)
+\begin{DoxyCompactList}\small\item\em Selects an action randomly, either from a discrete or continuous distribution. \end{DoxyCompactList}\item 
+Action\+Type \mbox{\hyperlink{classActor_af6172db6dd4520b2615eff9c7ba6983a}{explore}} (const State\+Type \&state, float epsilon)
+\begin{DoxyCompactList}\small\item\em Selects an action using an epsilon-\/greedy strategy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{classActor_a4a8af076bb4954cb0011b54c6ea55bc3}{random}} ()
+\begin{DoxyCompactList}\small\item\em Generates a random floating-\/point number between 0.\+0 and 1.\+0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Policy\+Type \& \mbox{\hyperlink{classActor_aa2b533fa6705ba59467b5df2acc7c706}{policy\+\_\+}}
+\item 
+std\+::mt19937 \mbox{\hyperlink{classActor_a8532fc69d97783100338d5d6f822f973}{rng\+\_\+}}
+\item 
+std\+::uniform\+\_\+real\+\_\+distribution \mbox{\hyperlink{classActor_afa6fae040d05c3bf40f4992ed74e108e}{rand\+\_\+dist}}
+\item 
+std\+::pair$<$ float, float $>$ \mbox{\hyperlink{classActor_a1437e93a3f5814f0d7a620ad6cb08009}{exploration\+\_\+window\+\_\+}} \{ 0.\+0, 0.\+0 \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Policy\+Type, typename State\+Type, typename Action\+Type$>$\newline
+class Actor$<$ Policy\+Type, State\+Type, Action\+Type $>$}
+
+The \mbox{\hyperlink{classActor}{Actor}} class represents an agent that selects actions in a given environment. 
+
+This class uses a specified policy to select actions based on an environment\textquotesingle{}s current state. It readily offers uniform random action-\/selection without further specification to enable epsilon-\/greedy exploration. It additionally houses a random number generator, which is to be provided by an instance of the \mbox{\hyperlink{classRandomEngine}{Random\+Engine}} class in order to enable global seeding and reproducibility of results across multiple agents. This class currently does not support multi-\/dimensional action spaces or action space representations with varying size that vary from state to state.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Policy\+Type} & The type of the policy used to select actions. \\
+\hline
+{\em State\+Type} & The type representing the state of the environment. \\
+\hline
+{\em Action\+Type} & The type representing the action taken by the agent. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classActor_a6b6314476803cfb36626e106274e7f73}\label{classActor_a6b6314476803cfb36626e106274e7f73}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!Actor@{Actor}}
+\index{Actor@{Actor}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{Actor()}{Actor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+\mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::\mbox{\hyperlink{classActor}{Actor}} (\begin{DoxyParamCaption}\item[{Policy\+Type}]{policy,  }\item[{std\+::mt19937}]{rng }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor for discrete action spaces. 
+
+Initializes the \mbox{\hyperlink{classActor}{Actor}} with the given policy and random number generator (RNG). This constructor should be used when the environment of interest provides only a discrete set of actions to choose from.
+
+
+\begin{DoxyParams}{Parameters}
+{\em policy} & The policy used by the actor to select actions. \\
+\hline
+{\em rng} & The random number generator used for stochastic action selection. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classActor_aa68a1ed3c974d45a9248f049047a2c37}\label{classActor_aa68a1ed3c974d45a9248f049047a2c37}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!Actor@{Actor}}
+\index{Actor@{Actor}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{Actor()}{Actor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+\mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::\mbox{\hyperlink{classActor}{Actor}} (\begin{DoxyParamCaption}\item[{Policy\+Type}]{policy,  }\item[{std\+::mt19937}]{rng,  }\item[{std\+::pair$<$ float, float $>$}]{exploration\+\_\+window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor for continuous action spaces. 
+
+Initializes the \mbox{\hyperlink{classActor}{Actor}} with the given policy, random number generator, and exploration window. This constructor should be used when the environment of interest provides a continuous interval of actions to choose from.
+
+
+\begin{DoxyParams}{Parameters}
+{\em policy} & The policy used by the actor to select actions. \\
+\hline
+{\em rng} & The random number generator used for stochastic action selection. \\
+\hline
+{\em exploration\+\_\+window} & A pair of floats specifying the minimum and maximum bounds for exploration. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classActor_af6172db6dd4520b2615eff9c7ba6983a}\label{classActor_af6172db6dd4520b2615eff9c7ba6983a}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!explore@{explore}}
+\index{explore@{explore}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{explore()}{explore()}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+Action\+Type \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::explore (\begin{DoxyParamCaption}\item[{const State\+Type \&}]{state,  }\item[{float}]{epsilon }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Selects an action using an epsilon-\/greedy strategy. 
+
+With probability {\ttfamily epsilon}, this method selects an action randomly. Otherwise, it selects the action that the policy would normally choose.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state of the environment. \\
+\hline
+{\em epsilon} & The probability \mbox{[}0, 1\mbox{]} of selecting a random action. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The selected action. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classActor_a4a8af076bb4954cb0011b54c6ea55bc3}\label{classActor_a4a8af076bb4954cb0011b54c6ea55bc3}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!random@{random}}
+\index{random@{random}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{random()}{random()}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+float \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::random (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Generates a random floating-\/point number between 0.\+0 and 1.\+0. 
+
+This method uses the uniform distribution initialized in the constructor to return a random floating-\/point number between 0.\+0 and 1.\+0. This method is called internally to support the epsilon-\/greedy exploration.
+
+\begin{DoxyReturn}{Returns}
+float A random number between 0.\+0 and 1.\+0. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classActor_a6820d705a176f354d70c3beae95ae45a}\label{classActor_a6820d705a176f354d70c3beae95ae45a}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!select\_action@{select\_action}}
+\index{select\_action@{select\_action}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{select\_action()}{select\_action()}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+Action\+Type \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::select\+\_\+action (\begin{DoxyParamCaption}\item[{const State\+Type \&}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Selects an action based on the current policy. 
+
+Uses the policy\textquotesingle{}s {\ttfamily sample} method to select an action given the current state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state of the environment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The action selected by the policy. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classActor_ad13d4b508a0deaeca8a180acbdc35cf2}\label{classActor_ad13d4b508a0deaeca8a180acbdc35cf2}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!select\_random@{select\_random}}
+\index{select\_random@{select\_random}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{select\_random()}{select\_random()}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+Action\+Type \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::select\+\_\+random (\begin{DoxyParamCaption}\item[{const State\+Type \&}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Selects an action randomly, either from a discrete or continuous distribution. 
+
+This method selects an action uniformly at random, either from a discrete set of actions or from a continuous range, depending on the action type.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The current state of the environment. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A randomly selected action. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classActor_a1437e93a3f5814f0d7a620ad6cb08009}\label{classActor_a1437e93a3f5814f0d7a620ad6cb08009}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!exploration\_window\_@{exploration\_window\_}}
+\index{exploration\_window\_@{exploration\_window\_}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{exploration\_window\_}{exploration\_window\_}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+std\+::pair$<$float, float$>$ \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::exploration\+\_\+window\+\_\+ \{ 0.\+0, 0.\+0 \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classActor_aa2b533fa6705ba59467b5df2acc7c706}\label{classActor_aa2b533fa6705ba59467b5df2acc7c706}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!policy\_@{policy\_}}
+\index{policy\_@{policy\_}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{policy\_}{policy\_}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+Policy\+Type\& \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::policy\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classActor_afa6fae040d05c3bf40f4992ed74e108e}\label{classActor_afa6fae040d05c3bf40f4992ed74e108e}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!rand\_dist@{rand\_dist}}
+\index{rand\_dist@{rand\_dist}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{rand\_dist}{rand\_dist}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+std\+::uniform\+\_\+real\+\_\+distribution \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::rand\+\_\+dist\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classActor_a8532fc69d97783100338d5d6f822f973}\label{classActor_a8532fc69d97783100338d5d6f822f973}} 
+\index{Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}!rng\_@{rng\_}}
+\index{rng\_@{rng\_}!Actor$<$ PolicyType, StateType, ActionType $>$@{Actor$<$ PolicyType, StateType, ActionType $>$}}
+\doxysubsubsection{\texorpdfstring{rng\_}{rng\_}}
+{\footnotesize\ttfamily template$<$typename Policy\+Type , typename State\+Type , typename Action\+Type $>$ \\
+std\+::mt19937 \mbox{\hyperlink{classActor}{Actor}}$<$ Policy\+Type, State\+Type, Action\+Type $>$\+::rng\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{actor_8h}{actor.\+h}}\end{DoxyCompactItemize}

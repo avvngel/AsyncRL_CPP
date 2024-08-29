@@ -1,0 +1,82 @@
+\hypertarget{classFunctionApproximator}{}\doxysection{Function\+Approximator$<$ Derived, Prediction\+Type, State\+Type $>$ Class Template Reference}
+\label{classFunctionApproximator}\index{FunctionApproximator$<$ Derived, PredictionType, StateType $>$@{FunctionApproximator$<$ Derived, PredictionType, StateType $>$}}
+
+
+Base class providing a unified interface for various function approximators.  
+
+
+
+
+{\ttfamily \#include $<$funct\+\_\+approx.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Prediction\+Type \mbox{\hyperlink{classFunctionApproximator_ac0ea751a7ce8a4f05772b247452839ed}{predict}} (const State\+Type \&state) const
+\begin{DoxyCompactList}\small\item\em Predict the output based on the given state. \end{DoxyCompactList}\item 
+auto \& \mbox{\hyperlink{classFunctionApproximator_a56cd86a46f9b0e004ad9fda21531b8d8}{get\+\_\+param\+\_\+reference}} ()
+\begin{DoxyCompactList}\small\item\em Get a reference to the parameters of the function approximator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Derived, typename Prediction\+Type, typename State\+Type$>$\newline
+class Function\+Approximator$<$ Derived, Prediction\+Type, State\+Type $>$}
+
+Base class providing a unified interface for various function approximators. 
+
+The \mbox{\hyperlink{classFunctionApproximator}{Function\+Approximator}} class serves as a flexible wrapper to standardize the interface for different types of function approximators. This allows users to integrate models ranging from simple linear regressions implemented in Eigen to complex deep neural networks built with libraries like Lib\+Torch, all within a consistent API. The primary purpose of this class is to ensure that any function approximator, regardless of its underlying implementation, adheres to a common structure, facilitating seamless integration with the rest of the Async\+RL++ library. Use this class template for any policy-\/function or value-\/function approximators.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Derived} & The specific function approximator class inheriting from this base class. \\
+\hline
+{\em Prediction\+Type} & The type of the output produced by the function approximator (must have a .size() method). \\
+\hline
+{\em State\+Type} & The type representing the input state used for predictions. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classFunctionApproximator_a56cd86a46f9b0e004ad9fda21531b8d8}\label{classFunctionApproximator_a56cd86a46f9b0e004ad9fda21531b8d8}} 
+\index{FunctionApproximator$<$ Derived, PredictionType, StateType $>$@{FunctionApproximator$<$ Derived, PredictionType, StateType $>$}!get\_param\_reference@{get\_param\_reference}}
+\index{get\_param\_reference@{get\_param\_reference}!FunctionApproximator$<$ Derived, PredictionType, StateType $>$@{FunctionApproximator$<$ Derived, PredictionType, StateType $>$}}
+\doxysubsubsection{\texorpdfstring{get\_param\_reference()}{get\_param\_reference()}}
+{\footnotesize\ttfamily template$<$typename Derived , typename Prediction\+Type , typename State\+Type $>$ \\
+auto\& \mbox{\hyperlink{classFunctionApproximator}{Function\+Approximator}}$<$ Derived, Prediction\+Type, State\+Type $>$\+::get\+\_\+param\+\_\+reference (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get a reference to the parameters of the function approximator. 
+
+This method allows access to the internal parameters of the approximator, enabling updates and modifications. Implementation is delegated to the derived class.
+
+\begin{DoxyReturn}{Returns}
+auto\& A reference to the parameters of the function approximator. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classFunctionApproximator_ac0ea751a7ce8a4f05772b247452839ed}\label{classFunctionApproximator_ac0ea751a7ce8a4f05772b247452839ed}} 
+\index{FunctionApproximator$<$ Derived, PredictionType, StateType $>$@{FunctionApproximator$<$ Derived, PredictionType, StateType $>$}!predict@{predict}}
+\index{predict@{predict}!FunctionApproximator$<$ Derived, PredictionType, StateType $>$@{FunctionApproximator$<$ Derived, PredictionType, StateType $>$}}
+\doxysubsubsection{\texorpdfstring{predict()}{predict()}}
+{\footnotesize\ttfamily template$<$typename Derived , typename Prediction\+Type , typename State\+Type $>$ \\
+Prediction\+Type \mbox{\hyperlink{classFunctionApproximator}{Function\+Approximator}}$<$ Derived, Prediction\+Type, State\+Type $>$\+::predict (\begin{DoxyParamCaption}\item[{const State\+Type \&}]{state }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Predict the output based on the given state. 
+
+This function delegates the call to the derived class\textquotesingle{}s predict method.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The input state for which to make a prediction. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Prediction\+Type The predicted output. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{funct__approx_8h}{funct\+\_\+approx.\+h}}\end{DoxyCompactItemize}
