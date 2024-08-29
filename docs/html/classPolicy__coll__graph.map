@@ -1,4 +1,0 @@
-<map id="Policy&lt; Derived, FunctionApproximator, StateType, ActionType &gt;" name="Policy&lt; Derived, FunctionApproximator, StateType, ActionType &gt;">
-<area shape="rect" id="node1" title="Base class for policies using the CRTP pattern to enable static polymorphism." alt="" coords="7,124,198,180"/>
-<area shape="rect" id="node2" href="$classFunctionApproximator.html" title="Base class providing a unified interface for various function approximators." alt="" coords="5,5,200,61"/>
-</map>
