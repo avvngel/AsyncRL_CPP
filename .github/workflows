@@ -1,4 +1,4 @@
-name: CMake Build and Test
+name: CMake Build, Test, and Generate Documentation
 
 on:
   push:
@@ -17,12 +17,18 @@ jobs:
     - name: Set up CMake
       uses: jwlawson/actions-setup-cmake@v1
 
+    - name: Install dependencies
+      uses: sudo apt-get install -y doxygen graphviz
+
     - name: Configure CMake
       run: cmake -S . -B build
 
-    - name: Build with CMake
+    - name: Build
       run: cmake --build build
 
     - name: Run tests
       run: ctest --output-on-failure --test-dir build
+    
+    - name: Generate Doxygen documentation
+      run: cmake --build build --target doc_doxygen
 
