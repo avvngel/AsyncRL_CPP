@@ -1,5 +1,8 @@
 #pragma once
 
+#include <torch/torch.h>
+#include "type_aliases.h"
+
 /**
  * @brief Base class for policies using the CRTP pattern to enable static polymorphism.
  * 
@@ -10,7 +13,6 @@
  */
 
 template < typename Derived
-         , typename FunctionApproximator
          , typename StateType
          , typename ActionType >
 
@@ -26,7 +28,8 @@ public:
      * @param dist_approx The function approximator for the action distribution.
      */
     
-    Policy( FunctionApproximator dist_approx ) : dist_approx_( dist_approx ) {}
+    Policy( torch:nn:Module dist_approx, torch::Tensor& action_space ) 
+    : dist_approx_( dist_approx ), action_space_ action_space {}
     
     // Public APIs
 
@@ -51,26 +54,31 @@ public:
      * @return A reference to the function approximator's parameters.
      */
     
-    auto get_param_reference()
+    torch::Tensor get_param_reference()
     { 
         return dist_approx_.get_param_reference();
     }
-   
+    
     /**
-     * @brief Gets the number of possible actions given a state.
+     * @brief Get the action space of the environment
+     *
+     * If the action space is continuous, the resulting Tensor will have dimensions nx2,
+     * with n being the number of action variables, and dim(1) containing the upper and
+     * lower bounds for each action variable.
      * 
-     * @param state The current state.
-     * @return std::size_t The number of possible actions.
+     * If the action space is discrete, the resultint Tensor wil have dimensions n,1,
+     * where dim(1) contains the number of options per action variable
+     * 
+     * @return A torch::Tensor describing the action space of the environment.
      */
 
-    auto get_n_actions( const StateType& state )
+    torch::Tensor get_action_space()
     { 
-        static std::size_t n_actions{ dist_approx_.predict( state ).size() };
-        return n_actions;
+        return action_space_;
     }
- 
+
 protected:    
 
-    FunctionApproximator& dist_approx_; /**< Reference to the function approximator used by the policy. */
-  
+    torch::nn::Module& dist_approx_; /**< Reference to the function approximator used by the policy. */
+    const torch::Tensor& action_space_
 };

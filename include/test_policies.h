@@ -10,14 +10,14 @@
 
 /**
  * @class SimplePolicy
- * @brief Example Policy implementation that employs the SimpleApprox to return a discrete action
+ * @brief Example Policy implementation that employs the SimpleNet to return a discrete action
 */
 
-class SimplePolicy : public Policy<SimplePolicy, SimpleApprox, DiscState, DiscAction>
+class SimplePolicy : public Policy<SimplePolicy, SimpleNet, DiscState, DiscAction>
 { 
 public:
     
-    using Policy<SimplePolicy, SimpleApprox, DiscState, DiscAction>::Policy;
+    using Policy<SimplePolicy, SimpleNet, DiscState, DiscAction>::Policy;
 
     // Public APIs
     DiscAction sample( const DiscState& state, std::mt19937& rng )
