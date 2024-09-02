@@ -5,8 +5,9 @@
 /**
  * @brief A utility class for managing global random number generation with optional seeding.
  *
- * The RandomEngine class provides a mechanism for setting a global seed to ensure
- * reproducibility across all random number generators used within the library. By 
+ * The RandomEngine class provides a mechanism for setting a global seed while enabling 
+ * threads to have their own local seed to ensure reproducibility and sufficient
+ * variability across all random number generators used within the library. By
  * default, the random engine is unseeded, producing non-deterministic random sequences 
  * because the random number generators (RNGs) returned by this class are seeded with a 
  * non-deterministic sequence of seeds. Once a seed is set, a seed generator produces a 
@@ -63,10 +64,10 @@ public:
     /**
      * @brief Returns a new random number generator.
      *
-     * @return A std::mt19937 random number generator.
+     * @return A an at::Generator random number generator.
      */
     
-    static std::mt19937 get_rng();
+    static at::Generator get_rng();
 
 private:
     // Private Attributes
