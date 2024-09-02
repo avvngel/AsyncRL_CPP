@@ -7,17 +7,18 @@ void RandomEngine::set_seed( unsigned int s ) {
 }
 
 // Getters
-std::mt19937 RandomEngine::get_rng() {
+at::Generator RandomEngine::get_rng() {
    if ( seed_set )
        {   // Generate determinisic sequence of seeds based on start seed
-        static std::mt19937 seed_generator{ seed };
-        auto next_seed = seed_generator();
-        return std::mt19937{ next_seed };
+        static at::Generator seed_generator{ at::make_generator<at::CPUGeneratorImpl>( seed ) };
+        auto next_seed = seed_generator->random();
+        return at::make_generator<at::CPUGeneratorImpl>( next_seed );
     }
+
     else
     {
-        std::random_device rd;
-        return std::mt19937{ rd() };
+        static std::random_device rd;
+        return at::make_generator<at::CPUGeneratorImpl>( rd() );
     } 
 }
 
