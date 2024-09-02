@@ -12,9 +12,8 @@
  * @tparam ActionType The type representing the action.
  */
 
-template < typename Derived
-         , typename StateType
-         , typename ActionType >
+template < typename Derived,
+           typename ActionSpace >
 
 class Policy
 { 
@@ -25,10 +24,11 @@ public:
     /**
      * @brief Constructs a Policy object with the given function approximator.
      * 
-     * @param dist_approx The function approximator for the action distribution.
+     * @param dist_approx The torch::nn::Module for approximating the action distribution
+     * @param action_space A torch::Tensor specifying the action_space representation
      */
     
-    Policy( torch:nn:Module dist_approx, torch::Tensor& action_space ) 
+    Policy( torch:nn:Module dist_approx, at::Tensor& action_space ) 
     : dist_approx_( dist_approx ), action_space_ action_space {}
     
     // Public APIs
@@ -41,7 +41,7 @@ public:
      * @return ActionType The sampled action.
      */
     
-    ActionType sample( const StateType& state, std::mt19937& rng ) const
+    Action sample( const State& state, at::Generator& rng ) const
     { 
         return static_cast<Derived*>( this )->sample( state, rng );
     }
@@ -72,13 +72,13 @@ public:
      * @return A torch::Tensor describing the action space of the environment.
      */
 
-    torch::Tensor get_action_space()
+    ActionSpace get_action_space()
     { 
         return action_space_;
     }
 
 protected:    
 
-    torch::nn::Module& dist_approx_; /**< Reference to the function approximator used by the policy. */
-    const torch::Tensor& action_space_
+    torch::nn::Module& dist_approx_; /**< Reference to the torch::nn:Module used by the policy. */
+    const ActionSpace action_space_ /// < Reference to the action space specification of the environment
 };
