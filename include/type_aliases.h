@@ -3,6 +3,8 @@
 #include <cstdint>
 #include "torch/torch.h"
 
+using State = at::Tensor;
+using Action = at::Tensor;
 using DiscState = int;
 using DiscStates = std::vector<DiscState>;
 using DiscAction = int;
