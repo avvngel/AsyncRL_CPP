@@ -4,6 +4,8 @@
 #include <utility>
 #include <cassert>
 #include "concepts.h"
+#include "type_aliases.h"
+#include "random_selector.h"
 
 /**
  * @brief The Actor class represents an agent that selects actions in a given environment.
@@ -21,11 +23,8 @@
  * @tparam ActionType The type representing the action taken by the agent.
  */
 
-template < typename PolicyType
-         , typename StateType
-         , typename ActionType >
+template < typename PolicyType >
 
-requires DiscreteAction<ActionType> || ContinuousAction<ActionType>
 class Actor
 {
 public:
@@ -43,34 +42,9 @@ public:
      * @param rng The random number generator used for stochastic action selection.
      */
 
-    Actor( PolicyType policy, std::mt19937 rng )
+    Actor( PolicyType policy, at::Generator rng )
     : policy_( policy ), rng_( std::move( rng ) ), rand_dist( 0.0, 1.0 )
-    {
-        static_assert( !ContinuousAction<ActionType>
-                     , "Continuous Action Space requires the specification of an exploration window");
-    };
 
-    /**
-     * @brief Constructor for continuous action spaces.
-     * 
-     * Initializes the Actor with the given policy, random number generator, and 
-     * exploration window. This constructor should be used when the environment of
-     * interest provides a continuous interval of actions to choose from.
-     * 
-     * @param policy The policy used by the actor to select actions.
-     * @param rng The random number generator used for stochastic action selection.
-     * @param exploration_window A pair of floats specifying the minimum and maximum bounds for exploration.
-     */
-
-    Actor( PolicyType policy
-         , std::mt19937 rng
-         , std::pair<float, float> exploration_window )
-    : policy_( policy ), rng_( std::move( rng ) ), rand_dist( 0.0, 1.0 )
-    {
-        assert( exploration_window.first < exploration_window.second
-              && "Min value must be less than max value" );
-    };
- 
     // Public APIs
 
     /**
@@ -82,7 +56,7 @@ public:
      * @return The action selected by the policy.
      */
     
-    ActionType select_action( const StateType& state )
+    Action select_action( const State& state )
     {
         return policy_.sample( state, rng_ );
     }
@@ -97,13 +71,10 @@ public:
      * @return A randomly selected action.
      */
     
-    ActionType select_random( const StateType& state )
+    Action select_random( const State& state )
     {
-
-        if constexpr ( DiscreteAction<ActionType> )
-            return select_random_discrete( state );
-        else
-            return select_random_continuous();
+        static auto actions = policy_.get_action_space();
+        return select_random_action( actions, rng_ );
     }
 
     /**
@@ -117,10 +88,10 @@ public:
      * @return The selected action.
      */
     
-    ActionType explore( const StateType& state, float epsilon)
+    Action explore( const State& state, float epsilon)
     { 
         if ( random() < epsilon )
-            return select_random( state );
+            return select_random( );
 
         else
             return select_action( state );
@@ -130,10 +101,7 @@ protected:
 
     // Protected Members
     PolicyType& policy_;
-    std::mt19937 rng_;
-    std::uniform_real_distribution<> rand_dist;
-    std::pair<float, float> exploration_window_{ 0.0, 0.0 };
-    
+    at::Generator rng_;
 
     // Protected APIs
 
@@ -147,40 +115,6 @@ protected:
      * @return float A random number between 0.0 and 1.0.
      */
 
-    float random() { return rand_dist( rng_ ); }
-
-private:
-
-    /**
-     * @brief Selects a random action from a discrete set of actions.
-     * 
-     * This method assumes that the action space is discrete and returns a random action
-     * based on a uniform distribution over the available actions.
-     * 
-     * @param state The current state of the environment.
-     * @return A randomly selected discrete action.
-     */
-
-    ActionType select_random_discrete( const StateType& state)
-    { 
-        static std::uniform_int_distribution<> rand_action_dist( 0, policy_.get_n_actions( state ) );
-        return rand_action_dist( rng_ );
-    }
-
-    /**
-     * @brief Selects a random action from a continuous range.
-     * 
-     * This method assumes that the action space is continuous and returns a random action
-     * within the exploration window specified in the continuous constructor.
-     * 
-     * @return A randomly selected continuous action.
-     */
-
-    ActionType select_random_continuous()
-    { 
-        static std::uniform_real_distribution<> rand_action_dist( exploration_window_.first
-                                                                , exploration_window_.second );
-        return rand_action_dist( rng_ );
-    }
+    float random() { return torch::rand( { 1 }, rng_ ).item<float>( ); }
 
 };
