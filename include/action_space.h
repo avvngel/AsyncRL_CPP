@@ -38,3 +38,9 @@ struct ContinuousVariableActionSpace
     at::Tensor& lower_bounds;
     at::Tensor& upper_bounds;
 };
+
+using ActionSpaceTypes = std::tuple< DiscreteUniformActionSpace
+                                   , DiscreteVariableActionSpace
+                                   , ContinuousUniformActionSpace
+                                   , ContinuousVariableActionSpace >
+

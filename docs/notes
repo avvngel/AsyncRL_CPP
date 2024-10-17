@@ -1,0 +1,52 @@
+
+
+# To Do
+- Implement Pre-thread setup in SetupManager
+
+- Finish handling PolicyArg in SetupManager for both Policy enum class and 
+  ConcretePolicy implementations *** IMPORTANT READ BELOW ***
+        - New problem: When policy arg is a whole concrete policy it doesn't
+                       make sense to ask for a whole torch::nn::Module, so you
+                       might have to just suck it up and write an overload for
+                       the whole launch function and maintain both for the case
+                       where the user provides a concrete policy
+
+- Implement the launch function
+
+- Implement ActorAllocStrategy and EnvAllocStrategy functors for both stack alloc
+  and static alloc
+
+- Implement SetupStrategy CRTP with both pre and on-thread setup methods ( create_resources )
+
+- Implement the concrete EpsilonSpecifiers
+
+- Change select_random_action to FunctorStruct
+
+- Conditionally make Actor, Environment, etc. thread-local or stack-allocated 
+  based on size
+
+- Give users option to make torch::nn::Module separately copied to each thread
+  thread-specific parameters, separately copied to each thread with shared
+  parameter references, or shared globally among all treads. Probably use a
+  strategy pattern with SetupStrategy for each type of scenario
+
+- Use strategy pattern to give each thread function a SetupStrategy and maybe
+  also a AlgorithmStrategy or UpdateStrategy ( although that might be what I give
+  to the Learner if I'm still keeping that )
+
+- Use std::variants to create concepts for constraining the constructor and
+  function arguments that expect ActionSpace structs ( most likely just class
+  template arguments ) to our supported action space representations. Use CTAD 
+  to accept various arguments into Actor constructor and define a 
+  select_random_action struct with call overloads for all supported action 
+  space representations ( or a struct with call overloads for any procedure 
+  that requires a particular ActionSpace)
+
+- Use std::variants to create concepts for constraining the constructor and
+  function arguments that expect EpsilonSupplier classes ( most likely just class
+  template arguments ) to our supported action space representations. Use CTAD 
+  to accept various arguments into EpsilonGreedy constructor and define a 
+  compute_epsilon struct with call overloads for all supported epsilon specifiers
+  ( or a struct with call overloads for any procedure that requires a particular 
+  EpsilonSupplier )
+

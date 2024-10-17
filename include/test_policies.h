@@ -13,7 +13,7 @@
  * @brief Example Policy implementation that employs the SimpleNet to return a discrete action
 */
 
-class SimplePolicy : public Policy<SimplePolicy, SimpleNet, DiscState, DiscAction>
+class SimplePolicy : public Policy<SimplePolicy, SimpleNet, DiscreteUniformActionSpace>
 { 
 public:
     

@@ -5,7 +5,6 @@
 #include <cassert>
 #include "concepts.h"
 #include "type_aliases.h"
-#include "random_selector.h"
 
 /**
  * @brief The Actor class represents an agent that selects actions in a given environment.
@@ -23,8 +22,8 @@
  * @tparam ActionType The type representing the action taken by the agent.
  */
 
-template < typename PolicyType >
-
+template < typename PolicyType
+         , typename ExplorationStrategy >
 class Actor
 {
 public:
@@ -42,8 +41,13 @@ public:
      * @param rng The random number generator used for stochastic action selection.
      */
 
-    Actor( PolicyType policy, at::Generator rng )
-    : policy_( policy ), rng_( std::move( rng ) ), rand_dist( 0.0, 1.0 )
+    Actor( PolicyType policy
+         , ExplorationStrategy exploration_strategy
+         , at::Generator rng
+         )
+    : policy_( policy )
+    , exploration_strategy_( exploration_strategy )
+    , rng_( std::move( rng ) ) { }
 
     // Public APIs
 
@@ -62,22 +66,6 @@ public:
     }
 
     /**
-     * @brief Selects an action randomly, either from a discrete or continuous distribution.
-     * 
-     * This method selects an action uniformly at random, either from a discrete set of actions
-     * or from a continuous range, depending on the action type.
-     * 
-     * @param state The current state of the environment.
-     * @return A randomly selected action.
-     */
-    
-    Action select_random( const State& state )
-    {
-        static auto actions = policy_.get_action_space();
-        return select_random_action( actions, rng_ );
-    }
-
-    /**
      * @brief Selects an action using an epsilon-greedy strategy.
      * 
      * With probability `epsilon`, this method selects an action randomly. Otherwise, it selects
@@ -88,13 +76,9 @@ public:
      * @return The selected action.
      */
     
-    Action explore( const State& state, float epsilon)
-    { 
-        if ( random() < epsilon )
-            return select_random( );
-
-        else
-            return select_action( state );
+    Action explore( const State& state )
+    {
+        return exploration_strategy_.explore( state, rng_ );
     }
 
 protected:
@@ -102,19 +86,11 @@ protected:
     // Protected Members
     PolicyType& policy_;
     at::Generator rng_;
-
-    // Protected APIs
-
-    /**
-     * @brief Generates a random floating-point number between 0.0 and 1.0.
-     * 
-     * This method uses the uniform distribution initialized in the constructor to
-     * return a random floating-point number between 0.0 and 1.0. This method is 
-     * called internally to support the epsilon-greedy exploration.
-     * 
-     * @return float A random number between 0.0 and 1.0.
-     */
-
-    float random() { return torch::rand( { 1 }, rng_ ).item<float>( ); }
+    ExplorationStrategy exploration_strategy_;
 
 };
+
+// Deduction Guide for CTAD
+template <typename PolicyType, ExplorationStrategy>
+Actor( PolicyType, ExplorationStrategy, at::Generator ) 
+     -> Actor< PolicyType, ExplorationStategy >;

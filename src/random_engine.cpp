@@ -1,3 +1,5 @@
+
+#include <limits>
 #include "random_engine.h"
 
 // Setters
@@ -11,7 +13,7 @@ at::Generator RandomEngine::get_rng() {
    if ( seed_set )
        {   // Generate determinisic sequence of seeds based on start seed
         static at::Generator seed_generator{ at::make_generator<at::CPUGeneratorImpl>( seed ) };
-        auto next_seed = seed_generator->random();
+        auto next_seed = torch::randint( std::numeric_limits<int>::max(), { 1 }, seed_generator ).item();
         return at::make_generator<at::CPUGeneratorImpl>( next_seed );
     }
 

@@ -1,30 +1,33 @@
 #include <iostream>
 #include <set>
+#include <limits>
 #include "random_engine.h"
 
 int test_set_seed() { 
     
     // Set a test seed and get a seed_generator
     unsigned int test_seed = 2;
-    std::mt19937 test_seed_generator{ test_seed };
+    auto test_seed_generator{ at::make_generator<at::CPUGeneratorImpl>( test_seed ) };
 
     // Set RandomEngine seed and get a seeded rng
     RandomEngine::set_seed( test_seed );
 
     // Get rng from RandomEngine and rng with seed set by test seed generator
-    std::mt19937 test_rng{ test_seed_generator() };
-    auto rng = RandomEngine::get_rng();
+    auto next_seed{ torch::randint( std::numeric_limits<int>::max(), {1}, test_seed_generator() ).item() };
+    at::Generator test_rng{ at::make_generator<at::CPUGeneratorImpl>( next_seed ) };
+    at::Generator rng = RandomEngine::get_rng();
     
     // Generate sequences and compare
-    int seq_len = 5;
+    int seq_len = 1000;
     
-    for ( int i = 0; i != seq_len; i++ ) 
+    at::Tensor test_seq{ torch::rand( { seq_len }, test_rng ) };
+    at::Tensor seq{ torch::rand( { seq_len }, test_rng ) };
+    
+    
+    if ( !at::equal( seq, test_seq ) )
     { 
-        if ( rng() != test_rng() )
-        { 
-            std::cout << "Test Failed: Seeded RNG sequences do not match.";
-            return 1;
-        }
+        std::cout << "Test Failed: Seeded RNG sequences do not match.";
+        return 1;
     }
 
     std::cout << "Test Passed: Seeded RNG sequences match.";
@@ -33,15 +36,13 @@ int test_set_seed() {
 
 int test_unseeded_rng() { 
 
-    auto rng = RandomEngine::get_rng();
-    std::set<uint32_t> random_numbers;
+    auto rng{ RandomEngine::get_rng() };
+    int seq_len = 1000;
+    rand_tensor{ torch::rand( { seq_len }, rng ) };
+    std_dev{ torch::std( rand_tensor ) }
     
-    for ( int i = 0; i != 100; i++ )
-    { 
-        random_numbers.insert( rng() );
-    }
 
-    if ( random_numbers.size() > 1 )
+    if ( std_dev.item<double>() > 0 )
     {
         std::cout << "Test Passed: Unseeded RNG generates random numbers.";
         return 0;

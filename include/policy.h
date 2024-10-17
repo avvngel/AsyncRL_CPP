@@ -13,8 +13,7 @@
  */
 
 template < typename Derived,
-           typename ActionSpace >
-
+           IsActionSpace ActionSpace >
 class Policy
 { 
 public:
@@ -41,7 +40,7 @@ public:
      * @return ActionType The sampled action.
      */
     
-    Action sample( const State& state, at::Generator& rng ) const
+    Action sample( const State& state, at::Generator& rng )
     { 
         return static_cast<Derived*>( this )->sample( state, rng );
     }

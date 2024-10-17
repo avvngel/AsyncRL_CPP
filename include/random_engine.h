@@ -1,6 +1,7 @@
 #pragma once
 
 #include <random>
+#include "torch/torch.h"
 
 /**
  * @brief A utility class for managing global random number generation with optional seeding.

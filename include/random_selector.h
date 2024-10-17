@@ -53,8 +53,8 @@ Action select_random_action( const ContinuousUniformActionSpace& actions
 Action select_random_action( const ContinuousVariableActionSpace& actions
                            , at::Generator rng )
     { 
-        return torch.rand( actions.bounds.size( 0 ), rng )
-               * ( action.bounds.index( Slice(), 1 ) - action.bounds.index( Slice(), 0 ) )
-               + actions.bounds.index( Slice(), 0 );
+        return torch.rand_like( actions.lower_bounds, rng )
+               * ( action.upper_bounds - action.lower_bounds )
+               + actions.lower_bounds;
     }
 
